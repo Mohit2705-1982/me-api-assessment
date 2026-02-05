@@ -4,49 +4,50 @@ function App() {
   const [profile, setProfile] = useState(null);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState(null);
-  const [error, setError] = useState(null);
 
-  // Load profile once
+  // Load profile (static demo data)
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/profile")
-      .then(res => res.json())
-      .then(data => {
-        console.log("PROFILE:", data);
-        setProfile(data);
-      })
-      .catch(err => {
-        console.error("PROFILE ERROR:", err);
-        setError("Backend not reachable");
-      });
+    setProfile({
+      name: "Mohit Kumar",
+      education: "B.Tech Engineering Physics, IIT Mandi",
+      github: "https://github.com/Mohit2705-1982",
+      linkedin: "https://linkedin.com/in/mohit-kumar-309906285"
+    });
   }, []);
 
-  // Search
+  // Demo search
   const search = () => {
-    fetch(`http://127.0.0.1:8000/search?q=${query}`)
-      .then(res => res.json())
-      .then(data => {
-        console.log("SEARCH:", data);
-        setResults(data);
-      })
-      .catch(err => {
-        console.error("SEARCH ERROR:", err);
-        setError("Search failed");
-      });
+    setResults({
+      profiles: [{ id: 1, name: "Mohit Kumar" }],
+      projects: [
+        { id: 1, title: "ONLYUS Chat App" },
+        { id: 2, title: "Gym Management Platform" }
+      ],
+      skills: [
+        { id: 1, name: "React" },
+        { id: 2, name: "FastAPI" },
+        { id: 3, name: "MySQL" }
+      ]
+    });
   };
 
   return (
     <div style={{ padding: 40, fontFamily: "Arial" }}>
       <h1>My Profile App</h1>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
       {profile ? (
         <div>
           <h2>{profile.name}</h2>
           <p>{profile.education}</p>
+
           <p>
-            <a href={profile.github} target="_blank">GitHub</a> |{" "}
-            <a href={profile.linkedin} target="_blank">LinkedIn</a>
+            <a href={profile.github} target="_blank" rel="noreferrer">
+              GitHub
+            </a>{" "}
+            |{" "}
+            <a href={profile.linkedin} target="_blank" rel="noreferrer">
+              LinkedIn
+            </a>
           </p>
         </div>
       ) : (
@@ -55,12 +56,14 @@ function App() {
 
       <hr />
 
-      <h3>Search</h3>
+      <h3>Search Demo</h3>
+
       <input
         value={query}
         onChange={e => setQuery(e.target.value)}
         placeholder="Search anything..."
       />
+
       <button onClick={search}>Search</button>
 
       {results && (
