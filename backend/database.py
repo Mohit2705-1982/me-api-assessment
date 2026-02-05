@@ -1,9 +1,8 @@
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-# IMPORTANT: replace with your real password
-# If password is @Mohit2705 → use %40Mohit2705
-DATABASE_URL = "mysql+pymysql://root:%40Mohit2705@localhost/profile_db"
+DATABASE_URL = os.getenv("")
 
-engine = create_engine(DATABASE_URL, echo=True)
+engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(bind=engine)
